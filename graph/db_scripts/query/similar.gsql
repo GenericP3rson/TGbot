@@ -1,0 +1,17 @@
+drop query similarArticles
+create query similarArticles (STRING word) for graph @graphname@ {
+     ListAccum<EDGE> @@edgelist;
+     Seed = {Word.*};
+     same_word = select s
+              FROM Seed:s -() -:t
+              where s.word == word;
+     blogs = select c
+              from Seed:s -(WORD_MESSAGE:e) -Message:c
+              where s.word == word
+     ACCUM @@edgelist+=e;
+     
+     print same_word;
+     print blogs;
+     PRINT @@edgelist;
+}
+install query similarArticles

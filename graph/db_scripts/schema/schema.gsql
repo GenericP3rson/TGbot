@@ -1,0 +1,9 @@
+CREATE VERTEX Word(primary_id word STRING) with primary_id_as_attribute="true"
+
+CREATE VERTEX Message(primary_id id INT, message STRING, url STRING)
+
+CREATE UNDIRECTED EDGE WORD_MESSAGE(FROM Message, To Word)
+
+CREATE GRAPH @graphname@(Word, Message, WORD_MESSAGE)
+
+
