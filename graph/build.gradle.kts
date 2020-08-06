@@ -138,6 +138,31 @@ tasks {
         }
     }
 
+    register<GsqlTask>("createLoadWords2"){
+        scriptPath = "load/loadWords2.gsql" // Call the file you have the load job in.
+        group = loadingGroup
+        description = "Loads our data"
+    }
+
+    register<HttpTask>("loadWords2") {
+        group = loadingGroup
+        description = "Load data via the REST++ endpoint"
+        post { httpConfig ->
+            httpConfig.request.uri.setPath("/ddl/${gGraphName}")
+            httpConfig.request.uri.setQuery(
+            mapOf(
+            "tag" to "loadWords2",
+            "filename" to "f1",
+            "sep" to ",",
+            "eol" to "\n"
+            )
+            )
+            httpConfig.request.setContentType("text/csv")
+            val stream = File("data/Words2.csv").inputStream() // If your data file was called anything else, you can change the File("").
+            httpConfig.request.setBody(stream)
+        }
+    }
+
     register<GsqlTask>("createQuerySimilarArticles") {
         scriptPath = "query/similar.gsql"
         group = queryGroup

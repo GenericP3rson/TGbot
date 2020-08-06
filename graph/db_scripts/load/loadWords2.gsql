@@ -1,0 +1,9 @@
+drop job loadWords2 // deletes past load job called loadData
+create loading job loadWords2 for graph @graphname@ { // creating a load job called loadData
+    define filename f1; // set the file
+    load f1 // loads the file
+    to vertex Word values($1), // loads data from the 2nd column in the CSV to the vertex Blog
+    to vertex Message values($2, $4, $3), // loads data from the 1st vertex to vertex Person
+    to edge WORD_MESSAGE values($2, $1) // connects all data from the 2nd column with the data from the 1st column
+    using header="false", separator=","; // Comma separator, not using headers
+}
