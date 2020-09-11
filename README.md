@@ -2,7 +2,7 @@
 
 A Discord bot which interacts with TigerGraph graphs. 
 
-# Technology Used
+## Technology Used
 - Discord.py
 - Giraffle
 - TigerGraph
